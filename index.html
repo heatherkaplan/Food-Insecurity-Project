@@ -25,6 +25,36 @@ section{scroll-margin-top:84px}
 [data-reveal].in{opacity:1;transform:none}
 @keyframes g2g-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes g2g-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+
+.nav-toggle{display:none}
+.nav-hamburger{display:none;flex:none;cursor:pointer;padding:6px;border:0;background:none;-webkit-tap-highlight-color:transparent}
+.nav-hamburger span{display:block;width:25px;height:3px;margin:5px 0;background:#2C5A34;border-radius:2px}
+@media (max-width:900px){
+  .nav-panel{display:none !important}
+  .nav-hamburger{display:block}
+  .nav-toggle:checked ~ .nav-panel{
+    display:flex !important;
+    position:absolute;
+    top:100%;left:0;right:0;
+    flex-direction:column;
+    align-items:stretch !important;
+    background:#fff;
+    padding:20px 28px 26px;
+    gap:18px;
+    border-bottom:1px solid #E7DFCE;
+    box-shadow:0 16px 30px rgba(35,48,31,.12);
+  }
+  .nav-toggle:checked ~ .nav-panel .nav-links{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:14px !important;
+  }
+  .nav-toggle:checked ~ .nav-panel .nav-cta{
+    align-self:flex-start;
+  }
+  section [style*="grid-template-columns"]{grid-template-columns:1fr !important}
+  footer [style*="grid-template-columns"]{grid-template-columns:1fr !important}
+}
 </style>
 </helmet>
 
@@ -33,23 +63,35 @@ section{scroll-margin-top:84px}
 <div style="min-height:100vh">
 
 <nav style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid #E7DFCE">
-  <div style="max-width:1200px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:28px">
+  <div style="position:relative;max-width:1200px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:28px">
     <a href="#home" style="display:flex;align-items:center;gap:10px;flex:none">
       <span style="width:34px;height:34px;border-radius:50%;background:#2C5A34;display:grid;place-items:center;color:#F4C542;font:800 15px Outfit,sans-serif">2</span>
       <span style="font:800 21px/1 Outfit,sans-serif;color:#2C5A34;letter-spacing:-.02em">Good<span style="color:#E2762A">2</span>Grow</span>
     </a>
-    <ul style="display:flex;flex-wrap:wrap;gap:22px;list-style:none;margin:0;padding:0;flex:1;justify-content:center">
-      <li><a href="#why" style="font:600 14px Nunito,sans-serif;color:#3D5136">Why It Matters</a></li>
-      <li><a href="#grow" style="font:600 14px Nunito,sans-serif;color:#3D5136">Grow Tomatoes</a></li>
-      <li><a href="#recipes" style="font:600 14px Nunito,sans-serif;color:#3D5136">Recipes</a></li>
-      <li><a href="#resources" style="font:600 14px Nunito,sans-serif;color:#3D5136">Resources</a></li>
-      <li><a href="#garden" style="font:600 14px Nunito,sans-serif;color:#3D5136">In the Garden</a></li>
-      <li><a href="#vision" style="font:600 14px Nunito,sans-serif;color:#3D5136">My Vision</a></li>
-      <li><a href="#about" style="font:600 14px Nunito,sans-serif;color:#3D5136">About Heather</a></li>
-    </ul>
-    <a href="#involve" style="flex:none;background:#E2762A;color:#fff;font:700 14px Nunito,sans-serif;padding:11px 22px;border-radius:999px;box-shadow:0 2px 0 #B95A18" style-hover="background:#C9611C;color:#fff">Get Involved</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <div class="nav-panel" style="display:flex;align-items:center;gap:28px;flex:1">
+      <ul class="nav-links" style="display:flex;flex-wrap:wrap;gap:22px;list-style:none;margin:0;padding:0;flex:1;justify-content:center">
+        <li><a href="#why" style="font:600 14px Nunito,sans-serif;color:#3D5136">Why It Matters</a></li>
+        <li><a href="#grow" style="font:600 14px Nunito,sans-serif;color:#3D5136">Grow Tomatoes</a></li>
+        <li><a href="#recipes" style="font:600 14px Nunito,sans-serif;color:#3D5136">Recipes</a></li>
+        <li><a href="#resources" style="font:600 14px Nunito,sans-serif;color:#3D5136">Resources</a></li>
+        <li><a href="#garden" style="font:600 14px Nunito,sans-serif;color:#3D5136">In the Garden</a></li>
+        <li><a href="#vision" style="font:600 14px Nunito,sans-serif;color:#3D5136">My Vision</a></li>
+        <li><a href="#about" style="font:600 14px Nunito,sans-serif;color:#3D5136">About Heather</a></li>
+      </ul>
+      <a href="#involve" class="nav-cta" style="flex:none;background:#E2762A;color:#fff;font:700 14px Nunito,sans-serif;padding:11px 22px;border-radius:999px;box-shadow:0 2px 0 #B95A18" style-hover="background:#C9611C;color:#fff">Get Involved</a>
+    </div>
+    <label for="nav-toggle" class="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></label>
   </div>
 </nav>
+<script>
+document.addEventListener('click', function(e){
+  var link = e.target.closest && e.target.closest('.nav-panel a');
+  if(!link) return;
+  var t = document.getElementById('nav-toggle');
+  if(t) t.checked = false;
+});
+</script>
 
 <section id="home" style="position:relative;overflow:hidden;background:#FAF6EE">
   <div style="position:absolute;top:-140px;right:-120px;width:620px;height:620px;border-radius:50%;background:#F1EBDC"></div>
